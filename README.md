@@ -7,30 +7,30 @@ Images to run the Strapi CMS in a containerized environment.
 ### Build the image:
 
 ```
- docker buildx build --push --tag davidetriso/strapi:[tagname-dir_name] --output type=image --platform linux/arm64,linux/amd64 ./[tagname-dir_name]
+ docker buildx build --push --tag artifacts.totalcom.it/library/strapi:[tagname-dir_name] --output type=image --platform linux/arm64,linux/amd64 ./[tagname-dir_name]
 ```
 
 E.g.:
 
 ```
-docker buildx build --push --tag davidetriso/nextjs:node-18.18 --output type=image --platform linux/arm64,linux/amd64 ./node-18.18
+docker buildx build --push --tag artifacts.totalcom.it/library/nextjs:node-18.18 --output type=image --platform linux/arm64,linux/amd64 ./node-18.18
 ```
 
-### Push image to Docker Hub
+### Push image to Harbor
 
 ```
-docker push davidetriso/strapi:tagname
+docker push artifacts.totalcom.it/library/strapi:tagname
 ```
 
 E.g.:
 
 ```
-docker push davidetriso/strapi:node-18.18
+docker push artifacts.totalcom.it/library/strapi:node-18.18
 ```
 
 ###  Build and push everything
 
-Execute the `./build-and-push.sh` script to build and push all images to Docker Hub at once.
+Execute the `./build-and-push.sh` script to build and push all images to Harbor at once.
 
 ## How to use
 
@@ -57,7 +57,3 @@ environment:
 ```
 
 > NOTE: When the container is launched, and no `package.json` file is found in the `/app` directory, the entrypoint script will trigger the creation of a new Strapi application with default configurations. Additionally, it will install the MySQL package as a project dependency.
-
-## License
-
-Licensed under the terms of the [MIT](LICENSE) license.
