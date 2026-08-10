@@ -16,7 +16,6 @@ RUN     apk update --no-cache \
             tzdata \
             vips-dev \
             zlib-dev \
-        && npm install --location=global create-strapi-app@latest \
         && mkdir -p /app
 
 WORKDIR /app
