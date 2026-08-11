@@ -21,17 +21,7 @@ RUN apk add --no-cache \
 WORKDIR /app
 
 
-ENTRYPOINT if [ ! -f "/app/package.json" ]; then \
-                npx --yes create-strapi-app@latest /app --quickstart --no-run --typescript \
-                && npm install --save --no-audit --fund=false mysql; \
-            fi \
-            && npm install --no-audit --fund=false \
-            && npm run build \
-            && if [ "$ENV" = "dev" ]; then \
-                npm run develop; \
-            else \
-                npm run start; \
-            fi
+ENTRYPOINT ["sh", "-c", "if [ ! -f \"/app/package.json\" ]; then npx --yes create-strapi-app@latest /app --quickstart --no-run --typescript && npm install --save --no-audit --fund=false mysql; fi && npm install --no-audit --fund=false && npm run build && if [ \"$ENV\" = \"dev\" ]; then npm run develop; else npm run start; fi"]
 
 
 EXPOSE 1337
