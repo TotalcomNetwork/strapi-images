@@ -1,10 +1,9 @@
-FROM    node:18.18-alpine
+FROM node:18.18-alpine
 
-ENV     ENV=$ENV
+ENV ENV=prod
 
-USER    root
-RUN     apk update --no-cache \
-        && apk add --update --no-cache \
+USER root
+RUN apk add --no-cache \
             autoconf \
             automake \
             build-base \
@@ -16,21 +15,21 @@ RUN     apk update --no-cache \
             tzdata \
             vips-dev \
             zlib-dev \
-        && npm install --location=global create-strapi-app@latest \
+        && npm install --location=global --no-audit --fund=false create-strapi-app@latest \
         && mkdir -p /app
 
 WORKDIR /app
 
-ENTRYPOINT  if [ ! -f "/app/package.json" ]; then \
-                npx create-strapi-app@latest /app --quickstart --no-run --typescript \ 
-                && npm install mysql --save; \
+ENTRYPOINT if [ ! -f "/app/package.json" ]; then \
+                npx --yes create-strapi-app@latest /app --quickstart --no-run --typescript \
+                && npm install --save --no-audit --fund=false mysql; \
             fi \
-            && npm install \
+            && npm install --no-audit --fund=false \
             && npm run build \
-            && if [ $ENV = "dev" ]; then \
+            && if [ "$ENV" = "dev" ]; then \
                 npm run develop; \
             else \
                 npm run start; \
             fi
 
-EXPOSE  1337
+EXPOSE 1337
